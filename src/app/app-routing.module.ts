@@ -7,6 +7,11 @@ const routes: Routes = [
     loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule) 
   },
   {
+    path: 'administration',
+    loadChildren: () => import('./protected/protected.module').then(m => m.ProtectedModule),
+    // ADD GUARDS 
+  },
+  {
     path: '**',
     redirectTo: 'auth'
   }

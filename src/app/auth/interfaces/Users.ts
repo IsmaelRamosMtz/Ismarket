@@ -6,4 +6,5 @@ export interface Users {
     email?: string;
     idUsersStatus?: any;
     idRole ?: any;
+    userStatus?: string;
 }

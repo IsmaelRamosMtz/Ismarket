@@ -28,8 +28,7 @@ export class LoginComponent implements OnInit {
 
     this._authService.userLogin(email, pass).subscribe((ok) => {
       if (ok === true) {
-        this._router.navigateByUrl('');
-        console.log('LOGUEADO:)');
+        this._router.navigateByUrl('/administration');
       } else {
         Swal.fire({
           icon: 'error',

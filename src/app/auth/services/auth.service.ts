@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 
 import { of, pipe, Observable } from 'rxjs';
@@ -14,7 +14,11 @@ import { AuthResponse } from '../interfaces/AuthResponse';
 })
 export class AuthService {
   private _baseUrl: string = environment.baseUrl;
-  private _users!: Users;
+  private _userInfo!: Users;
+
+  get userInfo() {
+    return { ...this._userInfo };
+  }
 
   constructor(private _http: HttpClient, private _router: Router) {}
 
@@ -24,8 +28,19 @@ export class AuthService {
 
     return this._http.post<AuthResponse>(url, body).pipe(
       tap((resp) => {
+        console.log(resp);
+        
         if (resp.ok === true) {
           localStorage.setItem('token', resp.token!);
+          this._userInfo = {
+            id: resp.id,
+            name: resp.name,
+            lastName: resp.lastName,
+            email: resp.email,
+            phone: resp.phone,
+            idUsersStatus: resp.idUsersStatus,
+            idRole: resp.idRole,
+          };
         }
       }),
       // Transformarmos la respuesta a un true o false dependiendo de las credenciales que se ingreses
