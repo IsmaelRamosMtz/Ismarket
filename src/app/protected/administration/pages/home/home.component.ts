@@ -17,6 +17,7 @@ import { AuthService } from '../../../../auth/services/auth.service';
   ],
 })
 export class HomeComponent implements OnInit {
+
   get userInfo() {
     return this._authService.userInfo;
   }

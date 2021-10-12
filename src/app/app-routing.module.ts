@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ValidarTokenGuard } from './auth/guards/validar-token.guard';
 
 const routes: Routes = [
   {
@@ -10,6 +11,8 @@ const routes: Routes = [
     path: 'administration',
     loadChildren: () => import('./protected/protected.module').then(m => m.ProtectedModule),
     // ADD GUARDS 
+    canActivate: [ValidarTokenGuard],
+    canLoad: [ValidarTokenGuard]
   },
   {
     path: '**',

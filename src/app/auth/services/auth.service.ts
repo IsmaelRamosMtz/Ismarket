@@ -16,6 +16,10 @@ export class AuthService {
   private _baseUrl: string = environment.baseUrl;
   private _userInfo!: Users;
 
+  get userInfo(){
+    return { ...this._userInfo}
+  }
+
   constructor(private _http: HttpClient, private _router: Router) {}
 
   userLogin(email: string, pass: string) {
@@ -59,9 +63,14 @@ export class AuthService {
               // Guardamos token en LS
               localStorage.setItem('token', resp.token!)
               this._userInfo = {
-                name: resp.name!,
-                email: resp.email!
-              }
+                id: resp.id,
+                name: resp.name,
+                lastName: resp.lastName,
+                email: resp.email,
+                phone: resp.phone,
+                idUsersStatus: resp.idUsersStatus,
+                idRole: resp.idRole,
+              };
             }
           }),
           map( resp => {
