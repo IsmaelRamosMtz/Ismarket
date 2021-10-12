@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 
 import { of, pipe, Observable } from 'rxjs';
@@ -14,7 +14,7 @@ import { AuthResponse } from '../interfaces/AuthResponse';
 })
 export class AuthService {
   private _baseUrl: string = environment.baseUrl;
-  private _users!: Users;
+  private _userInfo!: Users;
 
   constructor(private _http: HttpClient, private _router: Router) {}
 
@@ -32,6 +32,33 @@ export class AuthService {
       map((resp) => resp.ok), // se convierte a boolean
       catchError((err) => of(err.error.msg)) // se transforma a tipo any
     );
+  }
+
+  revalidateToken():Observable<boolean> {
+    const url = `${ this._baseUrl }/auth/renew`;
+
+    const headers = new HttpHeaders()
+    .set('x-token', localStorage.getItem('token') || '');
+    
+    return this._http.get<AuthResponse>(url, { headers } )
+        .pipe(
+          tap( resp => {
+            // console.log('respuesta de servicio validar token', resp);
+            if(resp.ok == true){
+              // Guardamos token en LS
+              localStorage.setItem('token', resp.token!)
+              this._userInfo = {
+                name: resp.name!,
+                email: resp.email!
+              }
+            }
+          }),
+          map( resp => {
+            // devuelve un true
+            return resp.ok
+          }),
+          catchError(err => of(false))
+        )
   }
 
   logout() {
