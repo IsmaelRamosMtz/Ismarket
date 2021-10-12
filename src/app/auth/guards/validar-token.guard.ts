@@ -1,19 +1,42 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, CanLoad, Route, RouterStateSnapshot, UrlSegment, UrlTree } from '@angular/router';
+import { CanActivate, CanLoad, Router, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
+import { AuthService } from '../services/auth.service';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class ValidarTokenGuard implements CanActivate, CanLoad {
-  canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    return true;
+
+  constructor(
+    private authService: AuthService,
+    private router: Router
+  ){
+
   }
-  canLoad(
-    route: Route,
-    segments: UrlSegment[]): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    return true;
+
+  canActivate(): Observable<boolean> | boolean | UrlTree {
+    console.log('canActivate');
+    return this.authService.revalidateToken()
+    .pipe(
+      tap(valid => {
+        if(!valid){
+          this.router.navigateByUrl('/auth/login');
+        }
+      })
+    );
+  }
+  canLoad(): Observable<boolean> | boolean | UrlTree {
+    console.log('canLoad');
+    return this.authService.revalidateToken()
+    .pipe(
+      tap(valid => {
+        if( !valid ){
+          this.router.navigateByUrl('/auth/login')
+        }
+      })
+    )
   }
 }
