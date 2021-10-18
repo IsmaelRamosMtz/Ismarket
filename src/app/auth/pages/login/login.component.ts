@@ -21,7 +21,9 @@ export class LoginComponent implements OnInit {
     private _authService: AuthService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this._authService.verificarSesion();
+  }
 
   login() {
     const { email, pass } = this.loginFormulario.value;

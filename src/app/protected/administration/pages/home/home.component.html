@@ -33,18 +33,20 @@
 
     </mat-sidenav>
 
-    <mat-toolbar style="background: inherit;">
+    <mat-toolbar color="primary">
         <button mat-icon-button (click)="sidenav.toggle()">
-            <mat-icon>menu</mat-icon>
+            <mat-icon style="color: white;">menu</mat-icon>
         </button>
 
-        <span>Hola {{ userInfo.name }}</span>
+        <span style="color: white;">Hola {{ userInfo.name }}</span>
 
         <span class="spacer"></span>
-        <span>Mi cuenta</span>
+        <span style="color: white;">Mi cuenta</span>
         <button mat-icon-button>
-            <mat-icon>account_circle</mat-icon>
+            <mat-icon style="color: white;">account_circle</mat-icon>
         </button>
+
+
     </mat-toolbar>
 
     <div class="container">

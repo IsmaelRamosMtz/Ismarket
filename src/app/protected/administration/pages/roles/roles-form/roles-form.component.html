@@ -1,0 +1,37 @@
+<h1>
+    <!-- Si la propiedad superHero esta llena muestra Actualizar sino el crear -->
+    <!-- {{( heroe.superHero )? 'Actualizar' : 'Crear' }} Héroe: <small>{{ nombreHeroe }} </small> -->
+    <span>{{ titleForm }}</span>
+  </h1>
+
+<div [formGroup]="rolesForm" fxLayout="column" fxLayoutGap="40px" fxLayout.xs="column">
+
+    <div fxFlex="50" fxLayout="column">
+
+        <div fxLayout="column" fxLayout.xs="column" fxLayoutGap="20px">
+  
+            <mat-form-field fxFlex="100" appearance="outline">
+                <mat-label>Nombre de rol</mat-label>
+                <input formControlName="roleName" type="text" matInput />
+                <span class="txtError" *ngIf="campoNoValido('roleName')">
+                  Ingrese un nombre.
+                </span>
+              </mat-form-field>
+
+              <mat-form-field fxFlex="100" appearance="outline">
+                <mat-label>Descripción</mat-label>
+                <input formControlName="descripcion" type="text" matInput />
+                <span class="txtError" *ngIf="campoNoValido('descripcion')">
+                  Ingrese la descripción.
+                </span>
+              </mat-form-field>
+
+        </div>
+
+        <mat-dialog-actions align="end">
+          <button color="warn" mat-button mat-dialog-close>Cancelar</button>
+          <button color="primary" mat-button [mat-dialog-close]="true" [disabled]="rolesForm.invalid" (click)="saveRole()">Añadir</button>
+        </mat-dialog-actions>
+    </div>
+
+</div>

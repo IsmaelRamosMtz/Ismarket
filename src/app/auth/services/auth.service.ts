@@ -32,6 +32,8 @@ export class AuthService {
         
         if (resp.ok === true) {
           localStorage.setItem('token', resp.token!);
+          localStorage.setItem('Id_User', resp.id!)
+          localStorage.setItem('Id_Role', resp.idRole!)
           this._userInfo = {
             id: resp.id,
             name: resp.name,
@@ -79,6 +81,14 @@ export class AuthService {
           }),
           catchError(err => of(false))
         )
+  }
+
+  verificarSesion(){
+    if(localStorage.getItem('token')){
+      this._router.navigateByUrl('/administration')
+    } else {
+      this._router.navigateByUrl('/auth/');
+    }
   }
 
   logout() {

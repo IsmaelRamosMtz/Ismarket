@@ -8,13 +8,15 @@ import { ProtectedRoutingModule } from './protected-routing.module';
 import { HomeComponent } from './administration/pages/home/home.component';
 import { RolesComponent } from './administration/pages/roles/roles.component';
 import { UsersComponent } from './administration/pages/users/users.component';
+import { RolesFormComponent } from './administration/pages/roles/roles-form/roles-form.component';
 
 
 @NgModule({
   declarations: [
     HomeComponent,
     RolesComponent,
-    UsersComponent
+    UsersComponent,
+    RolesFormComponent
   ],
   imports: [
     ReactiveFormsModule,
